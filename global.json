@@ -1,0 +1,7 @@
+{
+    "sources": [
+        "src/Sample.ConsoleApp",
+        "src/Sample.CsConfig",
+        "src/WAPIApp"
+    ]
+}
