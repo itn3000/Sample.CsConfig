@@ -1,0 +1,36 @@
+{
+  "version": "1.0.0-*",
+  "description": "Sample.CsConfig Class Library",
+  "authors": [ "Class Library template" ],
+  "tags": [""],
+  "projectUrl": "",
+  "licenseUrl": "",
+  "tooling": {
+    "defaultNamespace": "Sample.CsConfig"
+  },
+  
+  "dependencies": {
+    "Microsoft.CodeAnalysis.Scripting": "1.1.0-rc1-20151109-01",
+    "Microsoft.Extensions.Configuration": "1.0.0-rc1-final"
+  },
+
+  "frameworks": {
+    "net46": { 
+      "frameworkAssemblies": {
+        "System.Runtime":"",
+        "System.Threading.Tasks":"",
+        "System.Reflection":""
+      }
+    },
+    "dotnet5.4": {
+      "dependencies": {
+        "Microsoft.CSharp": "4.0.1-beta-23516",
+        "System.Collections": "4.0.11-beta-23516",
+        "System.Linq": "4.0.1-beta-23516",
+        "System.Runtime": "4.0.21-beta-23516",
+        "System.Threading": "4.0.11-beta-23516",
+        "System.Console": "4.0.0-beta-23516"
+      }
+    }
+  }
+}
