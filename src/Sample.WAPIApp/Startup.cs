@@ -17,7 +17,8 @@ namespace Sample.WAPIApp
         {
             // Set up configuration sources.
             var builder = new ConfigurationBuilder()
-                .AddCs("appsettings.csx")
+                .AddCs("appsettings.csx"
+                    , additionalFiles: new string[]{"MyConfiguration.cs"})
                 ;
             Configuration = builder.Build();
         }
@@ -29,6 +30,8 @@ namespace Sample.WAPIApp
         {
             // Add framework services.
             services.AddMvc();
+            services.AddOptions();
+            services.Configure<MyConfiguration>(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,7 +51,7 @@ namespace Sample.WAPIApp
             }
             logger.LogInformation("child section");
             // get subsection
-            var children = Configuration.GetSection("c");
+            var children = Configuration.GetSection("e");
             foreach(var config in children.GetChildren())
             {
                 logger.LogInformation("key={0},value={1},path={2}"

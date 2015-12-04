@@ -1,10 +1,20 @@
-var ReturnValue = new 
+var ReturnValue = new MyConfiguration()
 {
-    a = "b",
-    c = 1,
-    d = new
+    a = "value1",
+    b = 1,
+    e = new MyConfiguration.SubConfiguration()
     {
-        e = "f",
-        g = 1.0,
-    },
+        c = 1,
+        d = "value2",
+    }
 };
+// var ReturnValue = new 
+// {
+//     a = "b",
+//     c = 1,
+//     d = new
+//     {
+//         e = "f",
+//         g = 1.0,
+//     },
+// };

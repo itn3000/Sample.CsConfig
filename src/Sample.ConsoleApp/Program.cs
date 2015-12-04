@@ -14,16 +14,16 @@ namespace Sample.ConsoleApp
             try
             {
                 var configRoot = new ConfigurationBuilder()
-                    .AddCs("appsettings.csx")
+                    .AddCs("appsettings.csx", additionalFiles: new List<string> { "MyConfiguration.cs" })
                     .Build();
                 // root configurations
-                foreach(var config in configRoot.GetChildren())
+                foreach (var config in configRoot.GetChildren())
                 {
                     Console.WriteLine($"{config.Path}/{config.Key} = {config.Value}");
                 }
                 // subsection configurations
-                var subSection = configRoot.GetSection("d");
-                foreach(var config in subSection.GetChildren())
+                var subSection = configRoot.GetSection("e");
+                foreach (var config in subSection.GetChildren())
                 {
                     Console.WriteLine($"{config.Path}/{config.Key} = {config.Value}");
                 }

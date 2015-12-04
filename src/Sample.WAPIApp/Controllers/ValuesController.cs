@@ -3,17 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
+using Microsoft.Extensions.OptionsModel;
 
 namespace Sample.WAPIApp.Controllers
 {
     [Route("api/[controller]")]
     public class ValuesController : Controller
     {
+        MyConfiguration _myConfig { get; set; }
+        public ValuesController(IOptions<MyConfiguration> opt)
+        {
+            _myConfig = opt.Value;
+        }
         // GET: api/values
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            return new string[] { "value1", "value2" };
+            return new string[] { "value1", "value2", _myConfig.a, _myConfig.e.c.ToString() };
         }
 
         // GET api/values/5
