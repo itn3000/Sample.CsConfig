@@ -10,9 +10,9 @@ namespace Sample.CsConfig
             this IConfigurationBuilder builder,
             string filePath,
             Encoding fileEncoding = null,
-            IEnumerable<string> additionalFiles = null)
+            IEnumerable<string> preloadFiles = null)
         {
-            var provider = new CsConfigurationProvider(filePath, fileEncoding, additionalFiles);
+            var provider = new CsConfigurationProvider(filePath, fileEncoding, preloadFiles);
             return builder.Add(provider);
         }
     }

@@ -18,7 +18,7 @@ namespace Sample.WAPIApp
             // Set up configuration sources.
             var builder = new ConfigurationBuilder()
                 .AddCs("appsettings.csx"
-                    , additionalFiles: new string[]{"MyConfiguration.cs"})
+                    )
                 ;
             Configuration = builder.Build();
         }
@@ -32,6 +32,9 @@ namespace Sample.WAPIApp
             services.AddMvc();
             services.AddOptions();
             services.Configure<MyConfiguration>(Configuration);
+            services.AddTransient<string>(svc=>{
+                return "";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,11 +44,13 @@ namespace Sample.WAPIApp
             loggerFactory.AddDebug();
 
             var logger = loggerFactory.CreateLogger("Startup");
+            // get configroot's children
             var configs = Configuration.GetChildren()
                 .Select(config => new { key = config.Key, path = config.Path, val = config.Value, })
                 ;
             foreach (var config in Configuration.GetChildren())
             {
+                // output config information
                 logger.LogInformation($"key={config.Key},value={config.Value},path={config.Path}"
                     );
             }

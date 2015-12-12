@@ -14,7 +14,7 @@ namespace Sample.ConsoleApp
             try
             {
                 var configRoot = new ConfigurationBuilder()
-                    .AddCs("appsettings.csx", additionalFiles: new List<string> { "MyConfiguration.cs" })
+                    .AddCs("appsettings.csx")
                     .Build();
                 // root configurations
                 foreach (var config in configRoot.GetChildren())

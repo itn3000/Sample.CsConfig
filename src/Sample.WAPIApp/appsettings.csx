@@ -1,3 +1,4 @@
+#load "MyConfiguration.cs"
 var ReturnValue = new MyConfiguration()
 {
     a = "value1",

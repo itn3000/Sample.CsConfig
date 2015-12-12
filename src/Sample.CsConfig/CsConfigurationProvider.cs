@@ -15,12 +15,16 @@ namespace Sample.CsConfig
     {
         string _filePath;
         Encoding _fileEncoding;
-        IList<string> _additionalFiles;
+        IList<string> _scriptSearchPath;
+        IList<string> _assemblySearchPath;
         ///<summary>
         ///  <params>
         ///  <params>
         ///</summary>
-        public CsConfigurationProvider(string configFilePath, Encoding fileEncoding = null, IEnumerable<string> additionalFiles = null)
+        public CsConfigurationProvider(string configFilePath
+            , Encoding fileEncoding = null
+            , IEnumerable<string> scriptSearchPath = null
+            , IEnumerable<string> assemblySearchPath = null)
         {
             _filePath = configFilePath;
             if (fileEncoding != null)
@@ -31,7 +35,8 @@ namespace Sample.CsConfig
             {
                 _fileEncoding = Encoding.UTF8;
             }
-            _additionalFiles = additionalFiles != null ? additionalFiles.ToList() : new List<string>();
+            _scriptSearchPath = scriptSearchPath != null ? scriptSearchPath.ToList() : new List<string>();
+            _assemblySearchPath = assemblySearchPath != null ? assemblySearchPath.ToList() : new List<string>();
         }
         ///<summary>get dictionary from any object</summary>
         IDictionary<string, string> GetDictionaryByReflection(string prefix, object obj)
@@ -72,12 +77,20 @@ namespace Sample.CsConfig
         public override void Load()
         {
             var code = File.ReadAllText(_filePath, _fileEncoding);
+            var resolver = ScriptMetadataResolver.Default
+                .WithBaseDirectory(AppContext.BaseDirectory)
+                .WithSearchPaths(_assemblySearchPath)
+                ;
+            var scriptResolver = ScriptSourceResolver.Default
+                .WithBaseDirectory(AppContext.BaseDirectory)
+                .WithSearchPaths(_scriptSearchPath)
+                ;
             var opts = ScriptOptions.Default
-                .AddReferences(typeof(Microsoft.Extensions.Configuration.Constants).GetTypeInfo().Assembly)
-                // .AddReferences(typeof(Sample.CsConfig.CsConfigurationExtension).GetTypeInfo().Assembly)
+                .WithMetadataResolver(resolver)
+                .WithSourceResolver(scriptResolver)
                 ;
             var preLoadState = CSharpScript.Create("", opts);
-            foreach (var csfile in _additionalFiles)
+            foreach (var csfile in _scriptSearchPath)
             {
                 preLoadState = preLoadState.ContinueWith(File.ReadAllText(csfile, _fileEncoding));
             }
